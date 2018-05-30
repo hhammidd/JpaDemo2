@@ -7,7 +7,7 @@ public class App {
     public static void main(String[] args) {
 
         Alien a = new Alien();
-        a.setAid(9);
+        a.setAid(10);
         a.setAname("mamad");
         a.setTech("bikar");
 
