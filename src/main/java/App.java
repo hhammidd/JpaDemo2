@@ -1,11 +1,27 @@
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Random;
 import java.util.List;
+
+/**
+ * Three basic form of Query expression
+ *  - JPQL
+ *  - Native SQL
+ *  - Criteria API
+ *      - String-Based Accessors
+ *      - Metamodel Accrssors
+ *      - Canonical Metamodel Accessors
+ *
+ * Entity Model provides More:
+ *  - JPQL
+ *  - Criteria API --> Type Safe of Query
+ * Native SQL provides direct access to:
+ *  - full power of SQL
+ *  - full access to db specific extensions
+ *
+ */
+
 
 public class App {
     public static void main(String[] args) {
@@ -27,10 +43,70 @@ public class App {
         //s.setLaptop(laptop);
 
 */
-        //
+        //this 3 lines is constant
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("User");
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
+
+        //Please do the Queries in JPA Below
+
+        /*
+        1. JPQL (Java Persistence Query Language
+         */
+
+
+
+        /*
+        2. Native SQL Queries
+        =
+         */
+        String tableName = "users";
+        String nativeSQLEx = "select u.utente_id, u.nome_utente " +
+                String.format("from %s u" , tableName) +
+                " where utente_id = 111 " ;
+        //"order by u.LAST_NAME ASC"
+
+        Query nativeSQLExQuery = em.createNativeQuery(nativeSQLEx, Users.class);
+        System.out.println(nativeSQLExQuery);
+
+        /*
+        3. Criteria API Queries
+        Build overall query using Java types (demonstrated here with "string accessors")
+        =======
+        Ex: convert below
+        select u from users u where u.utente_id = :xx
+        order by u.azienda_id ASC
+        ------- Conver Above SQL To Criteria API--------
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Users> qdef = cb.createQuery(Users.class);
+        Root<Users> u = qdef.from(Users.class);
+        qdef.select(u)
+        .where(cb.equal(u.get("xx"),
+        cb.parameter(String.class,"xx")))
+        .orderBy(cb.asc(u.get("azienda_id")));
+        //build query from criteria definition
+        TypedQuery<Users> query = em.createQuery(qdef);
+        ---------------Explain--------------
+            "CriteriaBuilder" used as starting point to build objects within the query tree
+            "CriteriaQuery<T>" used to hold the definition of query
+            "Root<T>" used to reference root level query terms
+            "CriteriaBuilder.from()" used to designate the entity that represents root query term
+            Result used to create path references for query body
+            "CriteriaBuilder.select()" officially lists the objects returned from query
+            "CriteriaBuilder.where()" builds a decision predicate of which entities to include
+            "CriteriaBuilder.equal()" builds an equals predicate for the where clause
+            "Root<T>.get()" returns the property referenced in path expression
+            "CriteriaBuilder.parameter()" builds a parameter placeholder within query. Useful with @Temporal date comparisons
+         */
+
+        /*
+        4. Strongly Typed Queries
+            Previous Criteria API examples were string label based -- not type safe
+            Criteria API provides means for stronger typing
+            Strong typing permits automatic detection of model and query differences
+         */
+
+
 
         Query q = em.createNativeQuery("SELECT  utn.azienda_id_mmas, utn.ruolo_id FROM users utn \n" +
                 "\t    \tJOIN ruolo rl ON utn.ruolo_id = rl.ruolo_id \n" +
@@ -80,7 +156,7 @@ public class App {
         // Now Test the List
        // List<Object[]> students = (List<Object[]>)q.getResultList();
 
-        //Object students = (Object) q.getResultList()
+        //Object students = (Object) q.getResultList();
 
 
 
