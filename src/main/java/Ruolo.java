@@ -1,4 +1,6 @@
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "ruolo")
@@ -14,6 +16,11 @@ public class Ruolo {
     @ManyToOne
     @JoinColumn(name="ins_utente", referencedColumnName="utente_id")
     private Users users;
+
+    @ManyToMany(mappedBy = "ruolos")
+    @JoinTable(name = "rel_ruolo_permesso" , joinColumns = @JoinColumn(name="EMP_ID", referencedColumnName="ruolo_id")
+    ,inverseJoinColumns = @JoinColumn(name = "permesso_id", referencedColumnName = "permesso_id"))
+    private List<Permesso> permessos = new ArrayList<Permesso>();
 
     public int getRuolo_id() {
         return ruolo_id;

@@ -52,22 +52,42 @@ public class App {
 
         /*
         1. JPQL (Java Persistence Query Language
+            - Access to the *entity* model using a SQL-like text query language
+            - Queries expressed using entities, properties, and relationships
+            --------------Example JPQL------------
+                "c" is part of root query
+                "c" represents rows from Customer entity table(s)
+                "c.lastName" is path off root term
+                ":firstName" is parameter placeholder
+                "c.firstName" is path off root term
+                "Customer.class" type parameter allows for a type-safe return result
          */
+        //String jpaqlString = "select c from Users c where c.nome_utente = :Admin " ;
+        //TypedQuery<Users> query = em.createQuery(jpaqlString, Users.class);
 
+                /*
+                Execute JPQL
+                 */
+        //at this point we are query-type agnostic
+
+        //List<Users> customers = query.setParameter("nome_utente", "thing").getResultList();
+        //log.info("result=" + customers);
+        //assertEquals("unexpected number of results", 2, customers.size());
 
 
         /*
         2. Native SQL Queries
         =
          */
-        String tableName = "users";
-        String nativeSQLEx = "select u.utente_id, u.nome_utente " +
-                String.format("from %s u" , tableName) +
-                " where utente_id = 111 " ;
+
+        //String tableName = "users";
+        //String nativeSQLEx = "select u.utente_id, u.nome_utente " +
+        //        String.format("from %s u" , tableName) +
+        //        " where utente_id = 111 " ;
         //"order by u.LAST_NAME ASC"
 
-        Query nativeSQLExQuery = em.createNativeQuery(nativeSQLEx, Users.class);
-        System.out.println(nativeSQLExQuery);
+        //Query nativeSQLExQuery = em.createNativeQuery(nativeSQLEx, Users.class);
+        //System.out.println(nativeSQLExQuery);
 
         /*
         3. Criteria API Queries
