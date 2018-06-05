@@ -1,3 +1,4 @@
+/*
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -42,3 +43,4 @@ public class Laptop {
         this.student = student;
     }
 }
+*/

@@ -1,3 +1,5 @@
+
+/*
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -45,3 +47,5 @@ public class NewLaptop {
         this.alien = alien;
     }
 }
+
+*/

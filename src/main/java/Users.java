@@ -1,3 +1,5 @@
+
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,18 +11,23 @@ public class Users {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int utente_id;
-    private int azienda_id;
+
     private int azienda_id_mmas;
     private String nome_utente;
     private String password;
     private int ruolo_id;
     private int amministratore;
     private int ins_utente;
+
+    @Column( columnDefinition = "int default 1")
     private int clruolo_id;
 
     @OneToMany(mappedBy = "users" , fetch = FetchType.EAGER)
     //@JoinColumn(name = "ins_utente")
     private List<Ruolo> ruolos = new ArrayList<Ruolo>();
+
+    //jioning to company
+
 
     public int getUtente_id() {
         return utente_id;
@@ -30,13 +37,19 @@ public class Users {
         this.utente_id = utente_id;
     }
 
-    public int getAzienda_id() {
-        return azienda_id;
+    @ManyToOne
+    @JoinColumn(name = "azienda_id", referencedColumnName = "azienda_id")
+    private Company company;
+
+
+    public Company getCompany() {
+        return company;
     }
 
-    public void setAzienda_id(int azienda_id) {
-        this.azienda_id = azienda_id;
+    public void setCompany(Company company) {
+        this.company = company;
     }
+
 
     public int getAzienda_id_mmas() {
         return azienda_id_mmas;
@@ -106,7 +119,6 @@ public class Users {
     public String toString() {
         return "Users{" +
                 "utente_id=" + utente_id +
-                ", azienda_id=" + azienda_id +
                 ", azienda_id_mmas=" + azienda_id_mmas +
                 ", nome_utente='" + nome_utente + '\'' +
                 ", password='" + password + '\'' +
@@ -115,6 +127,7 @@ public class Users {
                 ", ins_utente=" + ins_utente +
                 ", clruolo_id=" + clruolo_id +
                 ", ruolos=" + ruolos +
+                ", company=" + company +
                 '}';
     }
 }

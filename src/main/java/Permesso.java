@@ -1,18 +1,23 @@
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "permesso")
 public class Permesso {
+
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int permesso_id;
     private String nome;
     private String descrizione;
 
-    @ManyToMany
-    private List<Ruolo> ruolos = new ArrayList<Ruolo>();
+    @OneToMany(mappedBy = "permesso")
+    private Set<Ruolo_Permesso> roulo_perm = new HashSet<Ruolo_Permesso>();
+
+
 
     public int getPermesso_id() {
         return permesso_id;
@@ -38,11 +43,6 @@ public class Permesso {
         this.descrizione = descrizione;
     }
 
-    public List<Ruolo> getRuolos() {
-        return ruolos;
-    }
 
-    public void setRuolos(List<Ruolo> ruolos) {
-        this.ruolos = ruolos;
-    }
+
 }

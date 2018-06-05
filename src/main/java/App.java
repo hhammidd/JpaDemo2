@@ -65,6 +65,71 @@ public class App {
         //String jpaqlString = "select c from Users c where c.nome_utente = :Admin " ;
         //TypedQuery<Users> query = em.createQuery(jpaqlString, Users.class);
 
+        TypedQuery<Users> usersQuery = em.createQuery("SELECT u FROM Users u", Users.class);
+        List<Users> usersRes = usersQuery.getResultList();
+
+        TypedQuery<Permesso> permessoQuery = em.createQuery("SELECT c FROM Permesso c", Permesso.class);
+        List<Permesso> permessoRes = permessoQuery.getResultList();
+
+        TypedQuery<Ruolo> ruoloQuery = em.createQuery("SELECT r FROM Ruolo r", Ruolo.class);
+        List<Ruolo> ruoloRes = ruoloQuery.getResultList();
+
+
+
+
+        TypedQuery<Company> companyQuery = em.createQuery("SELECT r FROM Company r", Company.class);
+        List<Company> companyRes = companyQuery.getResultList();
+
+        for (Company s : companyRes){
+            System.out.println("Azienda_id: " + s.getAzienda_id() + " Nome Azienda: " + s.getNome_azienda());
+        }
+
+
+        System.out.println("Users: " + usersRes);
+        System.out.println("Company: " + companyRes);
+        System.out.println("Permesso: " + permessoRes);
+        System.out.println("Users: " + ruoloRes);
+
+
+
+
+        //Insert Value on the Users
+        Users u = new Users();
+        Company c1 = new Company();
+
+
+
+        c1.setAzienda_id(5);
+
+        u.setCompany(c1);
+        u.setAzienda_id_mmas(111);
+        u.setNome_utente("newnew");
+        u.setPassword("newnew");
+        u.setRuolo_id(1);
+        u.setAmministratore(0);
+        u.setIns_utente(4);
+
+        em.persist(u);
+        System.out.println("u: " + u);
+
+
+
+/*
+
+        String nativeSQLEx = "INSERT INTO users (azienda_id, azienda_id_mmas, nome_utente, password, ruolo_id, amministratore, ins_utente)\n" +
+                "values \n" +
+                "(2, 111, \"hamcddcdcdcddcidh2xs\", \"passcddcdjj\", 1, 0, 1)";
+
+        Query nativeSQLExQuery = em.createNativeQuery(nativeSQLEx, Users.class);
+*/
+
+
+
+
+
+
+
+
                 /*
                 Execute JPQL
                  */
@@ -127,17 +192,22 @@ public class App {
          */
 
 
-
-        Query q = em.createNativeQuery("SELECT  utn.azienda_id_mmas, utn.ruolo_id FROM users utn \n" +
+/*
+        Query q1 = em.createNativeQuery("SELECT utn.amministratore, utn.nome_utente, utn.utente_id, utn.azienda_id_mmas, utn.ruolo_id, prm.nome, prm.permesso_id FROM users utn \n" +
                 "\t    \tJOIN ruolo rl ON utn.ruolo_id = rl.ruolo_id \n" +
-                "\t\t     WHERE utn.utente_id = 1 AND utn.nome_utente = \"admin\";");
-        List<Object[]> students = (List<Object[]>)q.getResultList();
+                "\t\t\tJOIN rel_ruolo_permesso rrp ON rl.ruolo_id = rrp.ruolo_id\n" +
+                "\t\t\tJOIN permesso prm ON rrp.permesso_id = prm.permesso_id WHERE utn.utente_id = 1 AND utn.nome_utente = \"Admin\";");
+        List<Object[]> students = (List<Object[]>)q1.getResultList();
 
         for (Object[] o : students) {
-            System.out.println("Students:{ " + " name: " + o[1] + " " +" marks : " + o[0] + " }" );
+            System.out.println("Users :{ " + " Admin Id : " + o[0] + " UserName : " + o[1] + " Id_User: " + o[2] + " azienda_id_mmas : " + o[3] + " rouolo_id : " + o[4] + " ruolo: " + o[5] +  " }" );
         }
+*/
 
-        System.out.println(q);
+
+       // System.out.println(q1);
+
+
 
         /*
         Query q = em.createQuery("from Student where rollno = 7");
