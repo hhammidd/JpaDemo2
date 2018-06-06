@@ -48,6 +48,18 @@ public class App {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
+        ServiceUsers su = new ServiceUsers();
+        su.doServiceUsers(em);
+
+        ServiceCompany sc = new ServiceCompany();
+        sc.doServiceCompany(em);
+
+        ServicePermesso sp = new ServicePermesso();
+        sp.doServicePermesso(em);
+
+        ServiceRuolo sr = new ServiceRuolo();
+        sr.doServiceRuolo(em);
+
         //Please do the Queries in JPA Below
 
         /*
@@ -64,70 +76,6 @@ public class App {
          */
         //String jpaqlString = "select c from Users c where c.nome_utente = :Admin " ;
         //TypedQuery<Users> query = em.createQuery(jpaqlString, Users.class);
-
-        TypedQuery<Users> usersQuery = em.createQuery("SELECT u FROM Users u", Users.class);
-        List<Users> usersRes = usersQuery.getResultList();
-
-        TypedQuery<Permesso> permessoQuery = em.createQuery("SELECT c FROM Permesso c", Permesso.class);
-        List<Permesso> permessoRes = permessoQuery.getResultList();
-
-        TypedQuery<Ruolo> ruoloQuery = em.createQuery("SELECT r FROM Ruolo r", Ruolo.class);
-        List<Ruolo> ruoloRes = ruoloQuery.getResultList();
-
-
-
-
-        TypedQuery<Company> companyQuery = em.createQuery("SELECT r FROM Company r", Company.class);
-        List<Company> companyRes = companyQuery.getResultList();
-
-        for (Company s : companyRes){
-            System.out.println("Azienda_id: " + s.getAzienda_id() + " Nome Azienda: " + s.getNome_azienda());
-        }
-
-
-        System.out.println("Users: " + usersRes);
-        System.out.println("Company: " + companyRes);
-        System.out.println("Permesso: " + permessoRes);
-        System.out.println("Users: " + ruoloRes);
-
-
-
-
-        //Insert Value on the Users
-        Users u = new Users();
-        Company c1 = new Company();
-
-
-
-        c1.setAzienda_id(5);
-
-        u.setCompany(c1);
-        u.setAzienda_id_mmas(111);
-        u.setNome_utente("newnew");
-        u.setPassword("newnew");
-        u.setRuolo_id(1);
-        u.setAmministratore(0);
-        u.setIns_utente(4);
-
-        em.persist(u);
-        System.out.println("u: " + u);
-
-
-
-/*
-
-        String nativeSQLEx = "INSERT INTO users (azienda_id, azienda_id_mmas, nome_utente, password, ruolo_id, amministratore, ins_utente)\n" +
-                "values \n" +
-                "(2, 111, \"hamcddcdcdcddcidh2xs\", \"passcddcdjj\", 1, 0, 1)";
-
-        Query nativeSQLExQuery = em.createNativeQuery(nativeSQLEx, Users.class);
-*/
-
-
-
-
-
-
 
 
                 /*
