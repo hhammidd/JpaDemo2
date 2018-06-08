@@ -49,9 +49,9 @@ public class ServiceCompany {
         persistCompany(em ,nome_azienda);
         //Get the last ID
 
-        String name = "sth";
-        List<Company> resCompany1 = findAllRuolo(em , name);
-        for (Company c : resCompany1) {
+        String name1 = "sth";
+        List<Company> resCompany2 = findAllRuolo(em , name1);
+        for (Company c : resCompany2) {
             System.out.println("here: " + c.getNome_azienda());
         }
 
