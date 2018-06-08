@@ -13,49 +13,41 @@ public class ServiceCompany {
     public void doServiceCompany(EntityManager em) {
 
 
-
-        TypedQuery<Company> companyQuery = em.createQuery("SELECT r FROM com.hamid.entity.Company r", Company.class);
-        List<Company> companyRes = companyQuery.getResultList();
-
-        for (Company s : companyRes){
-            System.out.println("Azienda_id: " + s.getAzienda_id() + " Nome Azienda: " + s.getNome_azienda());
-            System.out.println("Company: " + companyRes);
-        }
+        findCompanyName(em);
 
         //The name of companies
-        String query_azienda = "SELECT nome_azienda FROM company";
-        Query q = em.createNativeQuery("SELECT nome_azienda FROM company");
-        List<String> company_name = q.getResultList();
-
-
-        String temp = company_name.get(1);
-        for (String s : company_name ) {
-            System.out.println(s);
-        }
-        System.out.println("======Belo Co test=========");
-
+        findCompanyNameNativeQuery(em);
         //1.EntityManager.createQuery Example
         //  it ask user that what you want from name of companies in DB
+
         String name = "%:Co%";
         List<Company> resCompany1 = findWithName(em , name);
         for (Company c : resCompany1) {
             System.out.println("here: " + c.getNome_azienda());
         }
-        //2. Named Parameters in Queries
-
         //3. Positional Parameters in Queries with ? mark
         //Insert into company
         String nome_azienda = "BeSolution1";
         persistCompany(em ,nome_azienda);
-        //Get the last ID
+    }
 
-        String name1 = "sth";
-        List<Company> resCompany2 = findAllRuolo(em , name1);
-        for (Company c : resCompany2) {
-            System.out.println("here: " + c.getNome_azienda());
+    private void findCompanyNameNativeQuery(EntityManager em) {
+        String query_azienda = "SELECT nome_azienda FROM company";
+        Query q = em.createNativeQuery("SELECT nome_azienda FROM company");
+        List<String> company_name = q.getResultList();
+        String temp = company_name.get(1);
+        for (String s : company_name ) {
+            System.out.println(s);
         }
+    }
 
+    private void findCompanyName(EntityManager em) {
+        TypedQuery<Company> companyQuery = em.createQuery("SELECT r FROM com.hamid.entity.Company r", Company.class);
+        List<Company> companyRes = companyQuery.getResultList();
 
+        for (Company s : companyRes){
+            System.out.println(s.getNome_azienda());
+        }
     }
 
     private List<Company> findAllRuolo(EntityManager em, String name) {

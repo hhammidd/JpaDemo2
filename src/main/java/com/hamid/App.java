@@ -62,6 +62,12 @@ public class App {
         ServiceRuolo_Permesso srp = new ServiceRuolo_Permesso();
         srp.doServiceRuolo_Permesso(em);
 
+        ServiceDbHamid sdh = new ServiceDbHamid();
+        sdh.doServiceDbHamid(em);
+
+        ServiceUsers_DbHamid sud = new ServiceUsers_DbHamid();
+        sud.doServiceUsers_DbHamid(em);
+
         //Please do the Queries in JPA Below
 
         /*

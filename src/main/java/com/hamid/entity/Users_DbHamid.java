@@ -19,8 +19,16 @@ public class Users_DbHamid {
     @JoinColumn(name = "db_id", referencedColumnName = "db_id")
     private DbHamid dbHamid;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date expire;
+
+    private String expire;
+
+    public String getExpire() {
+        return expire;
+    }
+
+    public void setExpire(String expire) {
+        this.expire = expire;
+    }
 
     public int getId() {
         return id;
