@@ -1,4 +1,7 @@
+package com.hamid.entity;
 
+import com.hamid.entity.Company;
+import com.hamid.entity.Ruolo;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -117,7 +120,7 @@ public class Users {
 
     @Override
     public String toString() {
-        return "Users{" +
+        return "com.hamid.entity.Users{" +
                 "utente_id=" + utente_id +
                 ", azienda_id_mmas=" + azienda_id_mmas +
                 ", nome_utente='" + nome_utente + '\'' +
